@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="home.css" rel="stylesheet" />
+    <script src="home.js"></script>
+    
+</head>
+<body onload="getNameAndDetailsForUpdate()">
+    
+    <h1 id="welcomeUser"></h1>
+    <a onclick="document.getElementById('update').style.setProperty('visibility','visible')">update</a>
+
+    <div id="update">
+        <label>user name</label>
+        <input id="updateEmail" type="email" /><br /><br />
+        <label>password</label>
+        <input id="updatePassword" type="password" /><br /><br />
+        <label>first name</label>
+        <input id="updateFirstName" type="text" onblur="saveName()" /><br /><br />
+        <label>last name</label>
+        <input id="updateLastName" type="text" /><br /><br />
+        <button onclick="updateUser()">update</button>
+
+    </div>
+</body>
+</html>

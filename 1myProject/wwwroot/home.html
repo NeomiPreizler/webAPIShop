@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="home.js"></script>
+
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="home.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="signIn">
+        <h4>Sign in</h4>
+        <label>user name</label>
+        <input id="loginEmail" type="email" /><br /><br />
+        <label>password</label>
+        <input id="loginPassword" type="password" /><br /><br />
+        <button onclick="login()">sign in</button>
+   
+        <br />
+        <a onclick="document.getElementById('signUp').style.setProperty('visibility','visible')">sign up</a>
+        <br /><br /><br />
+    </div>
+    
+    <div id="signUp">
+        <h4>Sign up</h4>
+        <label>email</label>
+        <input id="email" type="email" /><br /><br />
+        <label>password</label>
+        <input onblur="changeStengthPassword()" id="password" type="password" /><br />
+        <progress value=0 id="score" max="4" ></progress>
+        <br />
+        <label>first name</label>
+        <input id="firstName" type="text" /><br /><br />
+        <label>last name</label>
+        <input id="lastName" type="text" /><br /><br />
+        <button onclick="addUser()">register</button>
+
+
+
+    </div>
+    
+</body>
+</html>
