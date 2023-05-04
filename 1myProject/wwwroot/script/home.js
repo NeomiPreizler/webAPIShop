@@ -2,7 +2,7 @@
 
 
 
-const uri = 'https://localhost:44343/api/User';
+const uri = 'api/User';
 
 
 async function updateUser() {
@@ -16,7 +16,7 @@ async function updateUser() {
     console.log(userDetailsUpdate);
     //uri + '/' + `${sessionStorage.user.userid}`
     const id = JSON.parse(sessionStorage.user).userId;
-    const user = await fetch(`https://localhost:44343/api/User/${id}`, {
+    const user = await fetch(`https://localhost:7061/api/User/${id}`, {
         method: 'PUT',
         headers:{
             'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ async function login() {
         console.log(myUser);
         sessionStorage.setItem('user', JSON.stringify(myUser));
         alert("logged in successfully");
-        document.location.href = 'UserDetails.html';
+        document.location.href = '../page/UserDetails.html';
     }
 }
 
@@ -72,7 +72,7 @@ async function changeStengthPassword() {
     const password = document.getElementById('password').value;
     console.log(password)
 
-    const chekPassword = await fetch('https://localhost:44343/api/Password', {
+    const chekPassword = await fetch('api/Password', {
         method: 'POST',
         headers: {
             //'Accept': 'application/json',
@@ -134,6 +134,6 @@ async function changeStengthPassword() {
          }
          await (response => response.json())
 
-         document.location.href = 'UserDetails.html';
+         document.location.href = '../page/UserDetails.html';
      }
    

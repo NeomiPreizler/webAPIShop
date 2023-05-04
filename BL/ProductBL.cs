@@ -19,10 +19,10 @@ namespace BL
             _productDL = productDL;
 
         }
-        public async Task<List<Product>> Get()
+        public async Task<IEnumerable<Product>> Get(IEnumerable<string>? categories, string? nameProduct, int? minPrice, int? maxPrice, string? orderBy = "name", string? direction = "desc")
         {
 
-            return await _productDL.Get();
+            return await _productDL.Get(categories,nameProduct, minPrice, maxPrice, orderBy, direction);
         }
         public async Task<Product> Post(Product product)
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DL
 {
@@ -15,11 +16,34 @@ namespace DL
         {
             _myShopDbContext = myShopDbContext;
         }
-        public async Task<List<Product>> Get()
-        {
+      
+        //public async Task<List<Product>> Get(int[]? categories, string? nameProduct, int? minPrice, int? maxPrice,  string? orderBy = "name", string? direction = "desc")//(int? minPrice, int? maxPrice, IEnumerable<string>? categories, string? nameProduct)
+        //{
+            //var qurey = _myShopDbContext.Products.Where(product => (nameProduct == null ? (true) : (product.Description.Contains(nameProduct)))
+            // && ((minPrice == null) ? (true) : (product.Price >= minPrice)).ToListAsync();
+            // && ((categories.Length == 0) ? (true) : (product.Category.Contains(categories)))
+            // && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))).OrderBy(product => orderBy).Include(p => p.CategoryNavigation).ToArray();
+            //Console.WriteLine(qurey);
 
-            return await _myShopDbContext.Products.Include(p=>p.Category).ToListAsync();
-        }
+            //List<Product> products = qurey.ToListAsync();
+            //return products;
+            //List<Product> products = await _myShopDbContext.Products.Include(p => p.Category).Where(p =>
+            //        (categories.Count() == 0 ? true : !categories.Contains(p.Category.CategoryName)) &&
+            //        (nameProduct == null || p.ProductName.Contains(nameProduct)) &&
+            //        (minPrice == null || p.Price >= minPrice) &&
+            //        (maxPrice == null || p.Price <= maxPrice))
+            //        .OrderBy(p => p.Price).ToListAsync();
+            //return products;
+            public async Task<IEnumerable<Product>> Get(IEnumerable<string>? categories, string? nameProduct, int? minPrice, int? maxPrice, string? orderBy = "name", string? direction = "desc")
+            {
+                return await _myShopDbContext.Products.Include(p => p.Category).Where(p =>
+                    (categories.Count() == 0 ? true : !categories.Contains(p.Category.CategoryName)) &&
+                    (nameProduct == null || p.ProductName.Contains(nameProduct)) &&
+                    (minPrice == null || p.Price >= minPrice) &&
+                    (maxPrice == null || p.Price <= maxPrice))
+                    .OrderBy(p => p.Price).ToListAsync();
+            }
+        //}
 
 
 

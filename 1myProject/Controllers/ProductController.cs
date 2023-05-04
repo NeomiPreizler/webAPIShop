@@ -21,13 +21,12 @@ namespace _1myProject.Controllers
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<ActionResult<List<Product>>>Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get([FromQuery] IEnumerable<string>? categories, [FromQuery] string? nameProduct, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] string? orderBy = "name", [FromQuery] string? direction = "desc")
         {
-            return await _productBL.Get();
-            
+            IEnumerable<Product> products = await _productBL.Get(categories, nameProduct, minPrice, maxPrice, orderBy, direction);
+            return products.Count() > 0 ? Ok(products) : NoContent();
         }
 
-    
 
         // POST api/<ProductController>
         [HttpPost]

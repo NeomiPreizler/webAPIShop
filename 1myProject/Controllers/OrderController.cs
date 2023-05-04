@@ -20,20 +20,20 @@ namespace _1myProject.Controllers
     
         }
         // GET: api/<OrderController>
-        [HttpGet]
+        //[HttpGet]
         //public async Task<ActionResult<List<Order>>> Get()
         //{
         //    return await _orderBL.Get();
 
         //}
 
-        //// GET api/<OrderController>/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Order>> Get(int id)
-        //{
-        //    Order order = await _orderBL.Get(id);
-        //    return order != null ? Ok(Order) : BadRequest("not found");
-        //}
+        // GET api/<OrderController>/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Order>> Get(int id)
+        {
+            Order order = await _orderBL.Get(id);
+            return order != null ? Ok(order) : BadRequest("not found");
+        }
 
         // POST api/<OrderController>
         [HttpPost]

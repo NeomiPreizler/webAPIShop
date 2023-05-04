@@ -17,7 +17,7 @@ namespace BL
                 _orderDL = orderDL;
             }
 
-            public async Task<List<Order>> Get(int id)
+            public async Task<Order> Get(int id)
             {
                 return await _orderDL.Get(id);
             }
@@ -32,10 +32,7 @@ namespace BL
                 _orderDL.Put(id, orderToUpdate);
             }
 
-        Task<Order> IOrderBL.Get(int id)
-        {
-            throw new NotImplementedException();
-        }
+          
         //public void Delete(int id)
         //{
 

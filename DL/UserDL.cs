@@ -65,29 +65,11 @@ namespace DL
             User user = await _myShopDbContext.Users.FindAsync(id);
             if (user != null)
             {
-                _myShopDbContext.Users.Update(userToUpdate);
-
+                //_myShopDbContext.Users.Update(userToUpdate);
+                _myShopDbContext.Entry(userToUpdate).CurrentValues.SetValues(userToUpdate);
                 await _myShopDbContext.SaveChangesAsync();
             }
-            //string textToReplace = string.Empty;
-            //using (StreamReader reader = System.IO.File.OpenText(_filePath))
-            //{
-            //    string currentUserInFile;
-            //    while ((currentUserInFile =await reader.ReadLineAsync()) != null)
-            //    {
-
-            //        User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-            //        if (user.UserId == id)
-            //            textToReplace = currentUserInFile;
-            //    }
-            //}
-
-            //if (textToReplace != string.Empty)
-            //{
-            //    string text =await System.IO.File.ReadAllTextAsync(_filePath);
-            //    text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
-            //    await System.IO.File.WriteAllTextAsync(_filePath, text);
-            //}
+           
         }
 
      
