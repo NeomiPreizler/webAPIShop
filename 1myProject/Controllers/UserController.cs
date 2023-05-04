@@ -1,6 +1,8 @@
 ﻿
+using AutoMapper;
 using BL;
 using DL;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -19,12 +21,14 @@ namespace _1myProject.Controllers
     {
         IUserBL _userBL ;
         IPasswordBL _passwordBL;
-        public  UserController(IUserBL userBL, IPasswordBL passwordBL)
-        { _userBL = userBL;
-           _passwordBL = passwordBL;
+        IMapper _mapper;
+        public  UserController(IUserBL userBL, IPasswordBL passwordBL, IMapper mapper)
+        {
+          _userBL = userBL;
+          _passwordBL = passwordBL;
+          _mapper = mapper;
         }
 
-        
         //GET: api/<LoginController>
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -37,7 +41,8 @@ namespace _1myProject.Controllers
         public async Task<ActionResult<User>> Get(int id)
         {
             User user=await _userBL.Get(id);
-            return  user != null ? Ok(user) : BadRequest("not found");
+            UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+            return userDTO != null ? Ok(userDTO) : BadRequest("not found");
         }
 
         //POST api/<LoginController>
@@ -46,8 +51,9 @@ namespace _1myProject.Controllers
         [Route("login")]
         public async Task<ActionResult<User>> LogIn([FromBody] User clientUser)
         {
-           User user = await _userBL.LogIn(clientUser);
-            return user == null? Unauthorized() : Ok(user);
+            User user = await _userBL.LogIn(clientUser);
+            UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
+            return userDTO == null? Unauthorized() : Ok(userDTO);
 
         }
 
