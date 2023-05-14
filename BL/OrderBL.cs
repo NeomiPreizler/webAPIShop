@@ -17,27 +17,20 @@ namespace BL
                 _orderDL = orderDL;
             }
 
-            public async Task<Order> Get(int id)
+            public async Task<Order> getOrderAsync(int id)
             {
-                return await _orderDL.Get(id);
+                return await _orderDL.getOrderAsync(id);
             }
 
-            public async Task<Order> Post(Order order)
+            public async Task<Order> addOrderAsync(Order order)
             {
-                return await _orderDL.Post(order);
+                return await _orderDL.addOrderAsync(order);
             }
 
-            public async Task Put(int id, Order orderToUpdate)
-            {
-                _orderDL.Put(id, orderToUpdate);
-            }
+            //public async Task Put(int id, Order orderToUpdate)
+            //{
+            //    _orderDL.Put(id, orderToUpdate);
+            //}
 
-          
-        //public void Delete(int id)
-        //{
-
-
-
-        //}
     }
     }

@@ -17,13 +17,13 @@ namespace DL
             _myShopDbContext = myShopDbContext;
         }
 
-        public async Task<Order> Get(int id)
+        public async Task<Order> getOrderAsync(int id)
         {
 
             return await _myShopDbContext.Orders.FindAsync(id);
         }
 
-        public async Task<Order> Post(Order order)
+        public async Task<Order> addOrderAsync(Order order)
         {
             await _myShopDbContext.Orders.AddAsync(order);
             await _myShopDbContext.SaveChangesAsync();

@@ -3,8 +3,10 @@ using BL;
 using DL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 
 // Add services to the container.
 builder.Services.AddTransient<IUserBL, UserBL>();
@@ -17,11 +19,13 @@ builder.Services.AddTransient<ICategoryBL, CategoryBL>();
 builder.Services.AddTransient<IOrderBL, OrderBL>();
 builder.Services.AddTransient<IOrderDL, OrderDL>();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<MyShopDbContext>(option => option.UseSqlServer("Server=srv2\\PUPILS;Database=myShop_db;Trusted_Connection=True;TrustServerCertificate=True"));
+
+string connectionString = builder.Configuration["connectionString"];
+
+builder.Services.AddDbContext<MyShopDbContext>(option => option.UseSqlServer(connectionString));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 
 var app = builder.Build();
 

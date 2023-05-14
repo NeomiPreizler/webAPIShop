@@ -19,23 +19,23 @@ namespace BL
             _productDL = productDL;
 
         }
-        public async Task<IEnumerable<Product>> Get(IEnumerable<string>? categories, string? nameProduct, int? minPrice, int? maxPrice, string? orderBy = "name", string? direction = "desc")
+        public async Task<IEnumerable<Product>> getProductsBySearch(IEnumerable<int>? categories, string? nameProduct, int? minPrice, int? maxPrice, string? orderBy = "name", string? direction = "desc")
         {
 
-            return await _productDL.Get(categories,nameProduct, minPrice, maxPrice, orderBy, direction);
+            return await _productDL.getProductsBySearch(categories,nameProduct, minPrice, maxPrice, orderBy, direction);
         }
-        public async Task<Product> Post(Product product)
+        public async Task<Product> addProductAsync(Product product)
         {
 
-            return await _productDL.Post(product);
+            return await _productDL.addProductAsync(product);
 
         }
 
-        public async Task Put(int id, Product productToUpdate)
-        {
-            _productDL.Put(id, productToUpdate);
+        //public async Task Put(int id, Product productToUpdate)
+        //{
+        //    _productDL.Put(id, productToUpdate);
 
-        }
+        //}
 
     }
 }

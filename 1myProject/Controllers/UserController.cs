@@ -1,12 +1,11 @@
 ﻿
 using AutoMapper;
 using BL;
-using DL;
 using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Text.Json;
-//using Entities;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,26 +18,25 @@ namespace _1myProject.Controllers
     
     public class UserController : ControllerBase
     {
+        ILogger<UserController> _logger;
         IUserBL _userBL ;
         IPasswordBL _passwordBL;
         IMapper _mapper;
-        public  UserController(IUserBL userBL, IPasswordBL passwordBL, IMapper mapper)
+        
+
+        public UserController(IUserBL userBL, IPasswordBL passwordBL, IMapper mapper,ILogger<UserController> logger)
         {
           _userBL = userBL;
           _passwordBL = passwordBL;
           _mapper = mapper;
+          _logger = logger;
         }
 
-        //GET: api/<LoginController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+
 
         // GET api/<LoginController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<UserDTO>> Get(int id)
         {
             User user=await _userBL.Get(id);
             UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
@@ -49,11 +47,14 @@ namespace _1myProject.Controllers
         //[HttpPost("/login")]
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<User>> LogIn([FromBody] User clientUser)
+        public async Task<ActionResult<UserDTO>> LogIn([FromBody] UserDTO clientUser)
         {
-            User user = await _userBL.LogIn(clientUser);
-            UserDTO userDTO = _mapper.Map<User, UserDTO>(user);
-            return userDTO == null? Unauthorized() : Ok(userDTO);
+            User user =  _mapper.Map<UserDTO, User>(clientUser);
+            User loginUser = await _userBL.LogIn(user);
+            
+           
+            //_logger.LogInformation($"Login - userName: {userDTO.Email} at {DateTime.UtcNow.ToLongTimeString()}");
+            return loginUser == null? Unauthorized() : Ok(_mapper.Map<User, UserDTO>(loginUser));
 
         }
 
@@ -61,14 +62,16 @@ namespace _1myProject.Controllers
 
         //POST api/<LoginController>
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User newUser)
+        public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO newUser)
         {
             int passwordStrength = await _passwordBL.checkStrangePassword(newUser.Password);
 
             if (passwordStrength >= 1)
             {
-                User user = await _userBL.Post(newUser);
-                return user;//return user != null ? CreatedAtAction(nameof(Get), new { id = user.UserId }, user) : BadRequest();
+                User user = _mapper.Map<UserDTO, User>(newUser);
+                User userCreated = await _userBL.Post(user);
+                UserDTO userDTOCreated = _mapper.Map<User, UserDTO>(userCreated);
+                return userDTOCreated;//return user != null ? CreatedAtAction(nameof(Get), new { id = user.UserId }, user) : BadRequest();
             }
             else
                 return passwordStrength == null ? Unauthorized() : BadRequest("Password isn't sronge");
@@ -78,19 +81,12 @@ namespace _1myProject.Controllers
 
         //// PUT api/<LoginController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] User userToUpdate)
+        public async Task Put(int id, [FromBody] UserDTO userToUpdate)
         {
-            await _userBL.Put(id,userToUpdate);
+            User user = _mapper.Map<UserDTO, User>(userToUpdate);
+            await _userBL.Put(id, user);
         }
 
-        // DELETE api/<LoginController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
-
-
-        }
     }
 }
 

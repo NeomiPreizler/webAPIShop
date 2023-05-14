@@ -1,6 +1,26 @@
 ﻿
-window.onload = () => {
+removeItem = (productId) => {
+    console.log("removeItem");
     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const deleteProductIndex = cart.findIndex(p => p.productId == productId);
+    if (cart[deleteProductIndex].count > 1) {
+        cart[deleteProductIndex].count--;
+    }
+    else {
+        cart = cart.filter(p => productId != p.productId);
+    }
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+
+    drawOrderProducts();
+
+
+}
+
+
+
+drawOrderProducts = () => {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    document.getElementsByTagName("tbody")[0].innerHTML = ''
     var countProducts = 0;
     var sumPrice = 0;
     //console.log(cart);
@@ -13,7 +33,11 @@ window.onload = () => {
         clone.querySelector(".descriptionColumn").innerText = p.productName;
         clone.querySelector(".descriptionColumn").innerText = p.count;
         clone.querySelector(".price").innerText = p.price;
-        clone.querySelector(".expandoHeight").onclick = () => { removeItem(p.productId) }
+        //clone.querySelector(".expandoHeight").onclick = () => { removeItem(p.productId) }
+        clone.querySelector(".expandoHeight").addEventListener('click', () => {
+            removeItem(p.productId);
+        });
+        console.log(p)
         document.querySelector("tbody").appendChild(clone);
         countProducts += p.count;
         sumPrice += p.price * p.count;
@@ -22,38 +46,6 @@ window.onload = () => {
     document.querySelector("#totalAmount").innerText = sumPrice;
 }
 
-removeItem = (id) => {
-    let deleteProductIndex=-1;
-    const cart = JSON.parse(sessionStorage.getItem("cart"));
-    cart.map((p,i) =>
-    {
-        if (p.productId == id)
-        {
-            if (p.count > 1)
-            {
-                p.count -= 1;
-            }
-            else
-            {
-                deleteProductIndex = i;
-            }
-        }
-    })
-    if (deleteProductIndex>-1)
-    {
-        cart[deleteProductIndex] = null;
-    }
-    sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-    document.querySelector("tbody").removeChild(document.querySelector("tbody").querySelector(`#prod${id}`));
-    
-    //השורות הבאות עובדות באיחור
-    document.querySelector("#itemCount").innerText = cart.reduce((accumulator, prod) => {
-        return accumulator + prod.count;
-    }, 0);
-    document.querySelector("#totalAmount").innerText = cart.reduce((accumulator, prod) => {
-        return accumulator + prod.price * prod.count;
-    }, 0);
-}
 
 placeOrder = async () => {
     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
@@ -75,3 +67,7 @@ placeOrder = async () => {
     console.log(response.status);
     if (response.ok) sessionStorage.setItem("cart", null);
 }
+
+
+/*document.addEventListener("load", atLoad());*/
+window.onload = () => { drawOrderProducts() };
