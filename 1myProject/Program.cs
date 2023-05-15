@@ -1,13 +1,15 @@
 
+using _1myProject;
 using BL;
 using DL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
-
+//
 // Add services to the container.
 builder.Services.AddTransient<IUserBL, UserBL>();
 builder.Services.AddTransient<IUserDL, UserDL>();
@@ -38,12 +40,33 @@ if (app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 //app.UseDefaultFiles();
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+    app.UseErrorHandlingMiddleware();
 
-app.MapControllers();
+    app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.UseStaticFiles();
+
+
+
+//app.Run(context =>
+//{
+//    context.Response.StatusCode = 404;
+//    return Task.FromResult(0);
+//});
+
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 404)
+    {
+        
+        await next();
+    }
+});
 
 app.Run();
