@@ -61,11 +61,11 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    await next();
+    await next(context);
     if (context.Response.StatusCode == 404)
     {
-        
-        await next();
+        context.Response.ContentType = "i";
+        await context.Response.SendFileAsync("../wwwroot/img/404.webp");
     }
 });
 
