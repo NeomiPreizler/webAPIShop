@@ -12,7 +12,7 @@ namespace BL
 
         public async Task<int> checkStrangePassword(string password)
         {
-            return Zxcvbn.Core.EvaluatePassword(password).Score;//    string chekPassword = password;//     options = {//    translations: zxcvbnEnPackage.translations,//    graphs: zxcvbnCommonPackage.adjacencyGraphs,//    dictionary://    {//        ...zxcvbnCommonPackage.dictionary,//    ...zxcvbnEnPackage.dictionary,//    },//    }//zxcvbnOptions.setOptions(options)//zxcvbn(password)//    }
+            return Zxcvbn.Core.EvaluatePassword(password).Score;
         }
     }
 }

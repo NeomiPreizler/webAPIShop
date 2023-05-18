@@ -1,11 +1,11 @@
 ﻿
 /*const uri = 'api/Product';*/
 addToCart = (product) => {
-    var cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    var cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingProd = cart.find(p => p.productId == product.productId);
     if (existingProd) existingProd.count += 1;
     else cart.push({ ...product, count: 1 });
-    sessionStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
     document.querySelector("#ItemsCountText").innerText = cart.length;
 }
 
@@ -32,7 +32,7 @@ async function fetchProductsData() {
    
     const productsJson = await (products.json());
     console.log(productsJson);
-    sessionStorage.setItem("products", JSON.stringify(productsJson));
+    localStorage.setItem("products", JSON.stringify(productsJson));
    
     return productsJson;
 }

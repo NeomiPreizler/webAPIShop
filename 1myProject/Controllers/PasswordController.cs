@@ -12,11 +12,7 @@ namespace _1myProject.Controllers
     {
         // PasswordBL passwordBL = new();
         // GET api/<PasswordController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+      
 
         IPasswordBL _PasswordBL;
         public PasswordController(IPasswordBL passwordBL)

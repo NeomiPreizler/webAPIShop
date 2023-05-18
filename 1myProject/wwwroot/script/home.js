@@ -1,7 +1,4 @@
 ﻿
-
-
-
 const uri = 'api/User';
 
 
@@ -14,8 +11,8 @@ async function updateUser() {
         lastname: document.getElementById('updateLastName').value
     };
     console.log(userDetailsUpdate);
-    //uri + '/' + `${sessionStorage.user.userid}`
-    const id = JSON.parse(sessionStorage.user).userId;
+   
+    const id = JSON.parse(localStorage.user).userId;
     const user = await fetch(`https://localhost:7061/api/User/${id}`, {
         method: 'PUT',
         headers:{
@@ -31,7 +28,7 @@ async function updateUser() {
 }
 
 function getNameAndDetailsForUpdate() {
-    const object = JSON.parse(sessionStorage.user);
+    const object = JSON.parse(localStorage.user);
     console.log(object);
     document.getElementById('welcomeUser').innerHTML = `welcome ${object.firstName}`;
     document.getElementById('updatePassword').setAttribute('value', object.password);
@@ -50,18 +47,18 @@ async function login() {
     const user = await fetch(uri + "/login", {
         method: 'POST',
         headers: {
-            //'Accept': 'application/json',
+           
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(loginDetails)
     })
          
         .catch(error => console.error('Unable to login.', error));
-    //await (user => user.json());
+   
     if (user.ok) {
         const myUser = await user.json();
         console.log(myUser);
-        sessionStorage.setItem('user', JSON.stringify(myUser));
+        localStorage.setItem('user', JSON.stringify(myUser));
         alert("logged in successfully");
         document.location.href = '../page/UserDetails.html';
     }
@@ -81,16 +78,17 @@ async function changeStengthPassword() {
         },
         body: JSON.stringify(password)
     })
-    /*    .catch (error => console.error('Unable to login.', error));*/
+      .catch (error => console.error('Unable to login.', error));
     if (!chekPassword.ok)
     {
         const data = await chekPassword.json();
         console.log(data);
-        throw new Error("Error 404");
+        alert
+        //throw new Error("Error 404");
     }
     else {
         const data = await chekPassword.json();
-        console.log(data);
+       // console.log(data);
         document.getElementById("score").value = data;
             
         
@@ -117,13 +115,14 @@ async function changeStengthPassword() {
          },
          body: JSON.stringify(userDetails.password)
      })
-     /*    .catch (error => console.error('Unable to login.', error));*/
-     if (!chekPassword.ok) {
+         .catch (error => console.error('Unable to login.', error));
+     if (chekPassword.ok) {
          const data = await chekPassword.json();
-         if (data<1)
-         console.log(data);
-         throw new Error("Error 404");
-     }
+         if (data < 1) { 
+             console.log("pass",data)
+                 alert("Password isn't srong, you can't register");
+             }}
+     
     
 
      const user = await fetch(uri,{
@@ -135,21 +134,21 @@ async function changeStengthPassword() {
         body: JSON.stringify(userDetails)
       })
          .catch(error => console.error('Unable to add user.', error));
-     //const responseText = await user.text();
-     //console.log(responseText);
-     //if (responseText == "Password isn't srong")
-     //{
-     //    alert("Password isn't srong");
-     //}
+    
        
          if (user.ok) {
              const myUser = await user.json();
              console.log(myUser);
-             sessionStorage.setItem('user', JSON.stringify(myUser));
+             localStorage.setItem('user', JSON.stringify(myUser));
              alert("created succsessfuly");
          }
          await (response => response.json())
 
          document.location.href = '../page/UserDetails.html';
-     }
+}
+
+logout = () => {
+    localStorage.clear();
+    document.location.href = '../home.html';
+}
    
