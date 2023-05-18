@@ -9,10 +9,10 @@ namespace BL
 {
     public interface IUserBL
     {
-        Task<User> Get(int id);
+        Task<User> GetbyIdAsync(int id);
         Task<User> LogIn(User clientUser);
-        Task<User> Post(User user);
-        Task Put(int id, User userToUpdate);
+        Task<User> AddNewUser(User user);
+        Task UpdateUser(int id, User userToUpdate);
 
 
     }

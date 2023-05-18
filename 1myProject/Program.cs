@@ -41,15 +41,17 @@ if (app.Environment.IsDevelopment())
 //app.UseDefaultFiles();
 
 
-    app.UseErrorHandlingMiddleware();
+app.UseErrorHandlingMiddleware();
 
-    app.UseHttpsRedirection();
+//app.UseRatingMiddleware();
 
-    app.UseAuthorization();
+app.UseHttpsRedirection();
 
-    app.MapControllers();
+app.UseAuthorization();
 
-    app.UseStaticFiles();
+app.MapControllers();
+
+app.UseStaticFiles();
 
 
 

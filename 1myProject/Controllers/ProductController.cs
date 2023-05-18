@@ -15,7 +15,7 @@ namespace _1myProject.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-
+     
         IMapper _mapper;
         IProductBL _productBL;
         public ProductController(IProductBL productBL,IMapper mapper)

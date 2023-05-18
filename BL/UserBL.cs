@@ -18,9 +18,9 @@ namespace BL
         }
 
 
-        public async Task<User> Get(int id)
+        public async Task<User> GetbyIdAsync(int id)
         {
-            return await _userDL.Get(id);
+            return await _userDL.GetbyIdAsync(id);
         }
 
 
@@ -29,32 +29,25 @@ namespace BL
             return await _userDL.LogIn(clientUser);
         }
 
-        public async Task<User> Post(User user)
+        public async Task<User> AddNewUser(User user)
         {
 
             //if (await _userDL.isUserExist(user))
             //    return null;
 
-            return await _userDL.Post(user);
+            return await _userDL.AddNewUser(user);
 
         }
 
 
-        public async Task Put(int id, User userToUpdate)
+        public async Task UpdateUser(int id, User userToUpdate)
         {
-            _userDL.Put(id, userToUpdate);
+            _userDL.UpdateUser(id, userToUpdate);
         }
 
-        // DELETE api/<LoginController>/5
-
-        public void Delete(int id)
-        {
 
 
 
-        }
-
-       
     }
 }
  

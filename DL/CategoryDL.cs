@@ -15,12 +15,12 @@ namespace DL
         {
             _myShopDbContext = myShopDbContext;
         }
-        public async Task<List<Category>> Get()
+        public async Task<List<Category>> GetAllCategoriesAsync()
         {
             return await _myShopDbContext.Categories.ToListAsync();
         }
 
-        public async Task<Category> Post(Category category)
+        public async Task<Category> AddCategoryAsync(Category category)
         {
             await _myShopDbContext.Categories.AddAsync(category);
             await _myShopDbContext.SaveChangesAsync();

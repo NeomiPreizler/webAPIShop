@@ -4,7 +4,7 @@ namespace BL
 {
     public interface ICategoryBL
     {
-        Task<List<Category>> Get();
-        Task<Category> Post(Category category);
+        Task<List<Category>> GetAllCategoriesAsync();
+        Task<Category> AddCategoryAsync(Category category);
     }
 }

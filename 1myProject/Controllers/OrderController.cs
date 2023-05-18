@@ -16,19 +16,19 @@ namespace _1myProject.Controllers
     {
         IOrderBL _orderBL;
         IMapper _mapper;
-        public OrderController(IOrderBL orderBL ,IMapper mapper)
+        public OrderController(IOrderBL orderBL, IMapper mapper)
         {
-            _mapper=mapper;
+            _mapper = mapper;
             _orderBL = orderBL;
-    
+
         }
-       
+
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDTO>> Get(int id)
         {
-            Order order = await _orderBL.getOrderAsync(id);
+            Order order = await _orderBL.GetOrderAsync(id);
             OrderDTO orderDTO = _mapper.Map<Order, OrderDTO>(order);
             return orderDTO != null ? Ok(orderDTO) : BadRequest("not found");
         }
@@ -38,7 +38,7 @@ namespace _1myProject.Controllers
         public async Task<ActionResult<OrderDTO>> Post([FromBody] OrderDTO orderDTO)
         {
             Order order = _mapper.Map<OrderDTO, Order>(orderDTO);
-            Order orderCreated= await _orderBL.addOrderAsync(order);
+            Order orderCreated = await _orderBL.AddOrderAsync(order);
             if (orderCreated != null)
             {
                 OrderDTO orderCreatedDTO = _mapper.Map<Order, OrderDTO>(orderCreated);
@@ -47,12 +47,12 @@ namespace _1myProject.Controllers
             return BadRequest();
         }
         // PUT api/<OrderController>/5
-        //[HttpPut("{id}")]
+        [HttpPut("{id}")]
 
-        //public async Task Put(int id, [FromBody] Order orderToUpdate)
-        //{
-        //    await _orderBL.Put(id, orderToUpdate);
-        //}
+        public async Task Put(int id, [FromBody] Order orderToUpdate)
+        {
+            await _orderBL.UpdateOrderAsync(id, orderToUpdate);
+        }
 
     }
 }

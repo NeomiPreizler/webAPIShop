@@ -24,12 +24,12 @@ namespace BL
             _productDL = productDL;
         }
 
-        public async Task<Order> getOrderAsync(int id)
+        public async Task<Order> GetOrderAsync(int id)
         {
-            return await _orderDL.getOrderAsync(id);
+            return await _orderDL.GetOrderAsync(id);
         }
 
-        public async Task<Order> addOrderAsync(Order order)
+        public async Task<Order> AddOrderAsync(Order order)
         {
             int chekSum = 0;
 
@@ -44,13 +44,13 @@ namespace BL
                 order.OrderSum = chekSum;
                 _logger.LogDebug("this user changed is sum", order.UserId);
             }
-            return await _orderDL.addOrderAsync(order);
+            return await _orderDL.AddOrderAsync(order);
         }
 
-        //public async Task Put(int id, Order orderToUpdate)
-        //{
-        //    _orderDL.Put(id, orderToUpdate);
-        //}
+        public async Task UpdateOrderAsync(int id, Order orderToUpdate)
+        {
+            _orderDL.UpdateOrderAsync(id, orderToUpdate);
+        }
 
     }
 }

@@ -1,13 +1,12 @@
 ﻿
 removeItem = (productId) => {
-    console.log("removeItem");
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const deleteProductIndex = cart.findIndex(p => p.productId == productId);
     if (cart[deleteProductIndex].count > 1) {
         cart[deleteProductIndex].count--;
     }
     else {
-         
+
         const newCart = cart.filter(p => productId != p.productId);
         cart = newCart;
     }
@@ -26,18 +25,16 @@ drawOrderProducts = () => {
     var sumPrice = 0;
 
     cart.map((p, i) => {
-        console.log(p,i);
         const temp = document.getElementById("temp-row");
         const clone = temp.content.cloneNode(true);
         clone.querySelector("tr").id = "prod" + p.productId;
         clone.querySelector('img').src = `/img/${p.img}`;
         clone.querySelector(".descriptionColumn").innerText = p.productName;
         clone.querySelector(".descriptionColumn").innerText = p.count;
-        clone.querySelector(".price").innerText = p.price;
+        clone.querySelector(".price").innerText = p.price * p.count;
         clone.querySelector(".expandoHeight").addEventListener('click', () => {
             removeItem(p.productId);
         });
-        console.log(p)
         document.querySelector("tbody").appendChild(clone);
         countProducts += p.count;
         sumPrice += p.price * p.count;
@@ -48,7 +45,7 @@ drawOrderProducts = () => {
 
 
 placeOrder = async () => {
-    
+
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     if (cart.length == 0) return;
     const orderDate = (new Date()).toISOString();
@@ -57,7 +54,7 @@ placeOrder = async () => {
     }, 0);
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) { alert("for shopping you need to login first!"); window.location.href = "../home.html"; return; }
-    const orderItems = cart.map(p => { return { productId: p.productId/*, quantity: p.count*/ } })
+    const orderItems = cart.map(p => { return { productId: p.productId } })
     const response = await fetch("https://localhost:7061/api/Order", {
         method: 'POST',
         headers: {
@@ -66,13 +63,8 @@ placeOrder = async () => {
         body: JSON.stringify({ orderDate, orderSum, userId: user.userId, orderItems })
     })
     const data = await response.json();
-    console.log(response.status);
     if (response.ok) {
         localStorage.setItem("cart", null);
-        
-        //let h_3 = document.createElement("h3");
-        //h_3.innerHTML = `Order ${data.orderId} added successfully`;
-        //document.getElementsByTagName("tbody")[0].appendChild(h_3);
         drawOrderProducts();
         alert(`Order ${data.orderId} added successfully`);
     };
@@ -80,6 +72,4 @@ placeOrder = async () => {
 
 }
 
-
-//document.addEventListener("load", drawOrderProducts());
 window.onload = () => { drawOrderProducts() };

@@ -13,6 +13,7 @@ namespace _1myProject.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+
         ICategoryBL _categoryBL;
         IMapper _mapper;
         public CategoryController(ICategoryBL categoryBL, IMapper mapper)
@@ -20,21 +21,20 @@ namespace _1myProject.Controllers
              _categoryBL = categoryBL;
               _mapper = mapper;
         }
+
         // GET: api/<CategoryController>
         [HttpGet]
         public async Task<ActionResult<List<CategoryDTO>>> Get()
         {
-            List<Category> categories = await _categoryBL.Get();
+            List<Category> categories = await _categoryBL.GetAllCategoriesAsync();
             if (categories != null)
             {
                 List<CategoryDTO> categoriesDTO = _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
                 return Ok(categoriesDTO);
             }
             return BadRequest("No categories");
-            
 
         }
-
 
 
         // POST api/<CategoryController>
@@ -42,7 +42,7 @@ namespace _1myProject.Controllers
         public async Task<ActionResult<CategoryDTO>> Post([FromBody] CategoryDTO categoryDTO)
         {
             Category category = _mapper.Map<CategoryDTO, Category>(categoryDTO);
-            Category categoryCreated = await _categoryBL.Post(category);
+            Category categoryCreated = await _categoryBL.AddCategoryAsync(category);
             if (categoryCreated != null)
             {
                 CategoryDTO categoryDTOCreated = _mapper.Map<Category, CategoryDTO>(categoryCreated);

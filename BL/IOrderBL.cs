@@ -4,9 +4,9 @@ namespace BL
 {
     public interface IOrderBL
     {
-        Task<Order> getOrderAsync(int id);
-        Task<Order> addOrderAsync(Order order);
-        //Task Put(int id, Order orderToUpdate);
+        Task<Order> GetOrderAsync(int id);
+        Task<Order> AddOrderAsync(Order order);
+        Task UpdateOrderAsync(int id, Order orderToUpdate);
   
     }
 }

@@ -19,7 +19,7 @@ namespace DL
         }
 
 
-        public async Task<User> Get(int id)
+        public async Task<User> GetbyIdAsync(int id)
         {
             User user = await _myShopDbContext.Users.Where(u => u.UserId == id).Include(u => u.Orders).FirstOrDefaultAsync();
             return user != null ? user : null;
@@ -35,7 +35,7 @@ namespace DL
 
         }
      
-        public async Task<User> Post(User user)
+        public async Task<User> AddNewUser(User user)
         {   
           
             await _myShopDbContext.Users.AddAsync(user);
@@ -51,19 +51,19 @@ namespace DL
         }
 
 
-        public async Task Put(int id,User userToUpdate)
+        public async Task UpdateUser(int id, User userToUpdate)
         {
 
-            User user = await _myShopDbContext.Users.FindAsync(id);
-            if (user != null)
-            {
-                //_myShopDbContext.Users.Update(userToUpdate);
-                _myShopDbContext.Entry(userToUpdate).CurrentValues.SetValues(userToUpdate);
+            //User user = await _myShopDbContext.Users.FindAsync(id);
+            //if (user != null)
+            //{
+                _myShopDbContext.Users.Update(userToUpdate);
+               //_myShopDbContext.Entry(userToUpdate).CurrentValues.SetValues(userToUpdate);
                 await _myShopDbContext.SaveChangesAsync();
-            }
-           
+            //}
+
         }
 
-     
+
     }
 }

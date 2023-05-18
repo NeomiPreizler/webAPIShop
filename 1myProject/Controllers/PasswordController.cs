@@ -10,10 +10,8 @@ namespace _1myProject.Controllers
     [ApiController]
     public class PasswordController : ControllerBase
     {
-        // PasswordBL passwordBL = new();
         // GET api/<PasswordController>/5
       
-
         IPasswordBL _PasswordBL;
         public PasswordController(IPasswordBL passwordBL)
         { _PasswordBL = passwordBL; }
@@ -22,7 +20,7 @@ namespace _1myProject.Controllers
 
         public async Task<ActionResult<int>> Post([FromBody] string password)
         {
-                int passwordStrength = await _PasswordBL.checkStrangePassword(password);
+                int passwordStrength = await _PasswordBL.CheckStrangePassword(password);
                 return passwordStrength == null ? Unauthorized() : Ok(passwordStrength);
         }
 

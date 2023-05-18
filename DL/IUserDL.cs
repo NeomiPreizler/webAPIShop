@@ -9,10 +9,10 @@ namespace DL
 {
     public interface IUserDL
     {
-        Task<User> Get(int id);
-        Task<User> LogIn(Entities.User clientUser);
-        Task<User> Post(Entities.User user);
-        Task<bool> isUserExist(Entities.User user);
-        Task Put(int id, Entities.User userToUpdate);
+        Task<User> GetbyIdAsync(int id);
+        Task<User> LogIn(User clientUser);
+        Task<User> AddNewUser(User user);
+        Task<bool> isUserExist(User user);
+        Task UpdateUser(int id,User userToUpdate);
     }
 }

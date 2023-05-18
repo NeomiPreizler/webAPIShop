@@ -5,6 +5,9 @@
 }
 
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-size: 100%;
     font-family: system-ui;
 }
@@ -50,7 +53,9 @@ p.description{
     height:65px;
 }
 .bar::before {
-    content: ' ❤ הכח הטמון ברגעים של אהבה';
+    /*display: block;*/
+    text-align: center;
+    content: ' ❤הכח הטמון ברגעים של אהבה❤ ';
     color: white;
     /* display: inline-block; */
     position: absolute;
@@ -81,6 +86,7 @@ p.description{
     opacity: 0.7;
 }
 .bar {
+    /*display: flex;*/
     background-color: black;
     height: 35px;
 }

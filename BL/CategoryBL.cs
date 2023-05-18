@@ -15,14 +15,14 @@ namespace BL
         {
             _categoryDL = categoryDL;
         }
-        public async Task<List<Category>> Get()
+        public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return await _categoryDL.Get();
+            return await _categoryDL.GetAllCategoriesAsync();
         }
 
-        public async Task<Category> Post(Category category)
+        public async Task<Category> AddCategoryAsync(Category category)
         {
-            return await _categoryDL.Post(category);
+            return await _categoryDL.AddCategoryAsync(category);
         }
     }
 }

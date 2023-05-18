@@ -16,7 +16,7 @@ namespace DL
         }
         public async Task AddRating(Rating rate)
         {
-            await _myShopDbContext.Rating.AddAsync(rate);
+            await _myShopDbContext.Ratings.AddAsync(rate);
             await _myShopDbContext.SaveChangesAsync();
         }
     }

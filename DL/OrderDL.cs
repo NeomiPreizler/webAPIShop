@@ -17,13 +17,13 @@ namespace DL
             _myShopDbContext = myShopDbContext;
         }
 
-        public async Task<Order> getOrderAsync(int id)
+        public async Task<Order> GetOrderAsync(int id)
         {
 
             return await _myShopDbContext.Orders.FindAsync(id);
         }
 
-        public async Task<Order> addOrderAsync(Order order)
+        public async Task<Order> AddOrderAsync(Order order)
         {
             await _myShopDbContext.Orders.AddAsync(order);
             await _myShopDbContext.SaveChangesAsync();
@@ -31,7 +31,7 @@ namespace DL
 
         }
 
-        public async Task Put(int id, Order orderToUpdate)
+        public async Task UpdateOrderAsync(int id, Order orderToUpdate)
         {
 
             Order order = await _myShopDbContext.Orders.FindAsync(id);

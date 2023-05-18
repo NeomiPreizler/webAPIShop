@@ -10,7 +10,7 @@ namespace BL
     public class PasswordBL:IPasswordBL
     {
 
-        public async Task<int> checkStrangePassword(string password)
+        public async Task<int> CheckStrangePassword(string password)
         {
             return Zxcvbn.Core.EvaluatePassword(password).Score;
         }

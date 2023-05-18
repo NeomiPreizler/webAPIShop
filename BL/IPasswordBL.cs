@@ -9,6 +9,6 @@ namespace BL
 {
     public interface IPasswordBL
     {
-        Task<int> checkStrangePassword(string password);
+        Task<int> CheckStrangePassword(string password);
     }
 }

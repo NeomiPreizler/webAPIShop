@@ -10,6 +10,7 @@
 <body onload="getNameAndDetailsForUpdate()">
 
     <h1 id="welcomeUser"></h1>
+    <a href="Products.html">דף הבית</a>  <button onclick="logout()">יציאה</button>
     <a onclick="document.getElementById('update').style.setProperty('visibility','visible')">update</a>
 
     <div id="update">
@@ -22,10 +23,8 @@
         <label>last name</label>
         <input id="updateLastName" type="text" /><br /><br />
         <button onclick="updateUser()">update</button>
-        <p> <a href="Products.html">דף הבית</a></p>
-
 
     </div>
-    <a href="Products.html">דף הבית</a><button onclick="logout()">יציאה</button>
+
 </body>
 </html>
