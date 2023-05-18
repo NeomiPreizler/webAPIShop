@@ -32,8 +32,8 @@ namespace BL
         public async Task<User> Post(User user)
         {
 
-            if (await _userDL.isUserExist(user))
-                return null;
+            //if (await _userDL.isUserExist(user))
+            //    return null;
 
             return await _userDL.Post(user);
 

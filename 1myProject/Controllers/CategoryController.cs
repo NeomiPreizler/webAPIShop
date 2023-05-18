@@ -46,7 +46,7 @@ namespace _1myProject.Controllers
             if (categoryCreated != null)
             {
                 CategoryDTO categoryDTOCreated = _mapper.Map<Category, CategoryDTO>(categoryCreated);
-                return CreatedAtAction(nameof(Get), new { id = categoryDTOCreated.Id }, categoryDTOCreated);
+                return CreatedAtAction(nameof(Get), new { id = categoryDTOCreated.CategoryId }, categoryDTOCreated);
             }
             return BadRequest();
             

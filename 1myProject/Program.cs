@@ -53,19 +53,13 @@ if (app.Environment.IsDevelopment())
 
 
 
-//app.Run(context =>
-//{
-//    context.Response.StatusCode = 404;
-//    return Task.FromResult(0);
-//});
-
 app.Use(async (context, next) =>
 {
     await next(context);
     if (context.Response.StatusCode == 404)
     {
-        context.Response.ContentType = "i";
-        await context.Response.SendFileAsync("../wwwroot/img/404.webp");
+        context.Response.ContentType = "text/html";
+        await context.Response.SendFileAsync("./wwwroot/page/404.html");
     }
 });
 

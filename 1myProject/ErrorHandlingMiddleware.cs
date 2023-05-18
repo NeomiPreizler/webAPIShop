@@ -23,7 +23,7 @@ namespace _1myProject
             }
             catch (Exception e)
             {
-                _logger.LogInformation("error caught in middlware", e.Message," ",e.StackTrace);
+                _logger.LogError("error caught in middlware", e.Message," ",e.StackTrace);
 
                 httpContext.Response.StatusCode = 500;
 

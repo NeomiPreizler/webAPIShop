@@ -24,6 +24,12 @@ namespace BL
 
             return await _productDL.getProductsBySearch(categories,nameProduct, minPrice, maxPrice, orderBy, direction);
         }
+
+       
+        public async Task<Product> GetProductByIdAsync(int id)
+        {
+            return await _productDL.GetProductByIdAsync(id);
+        }
         public async Task<Product> addProductAsync(Product product)
         {
 

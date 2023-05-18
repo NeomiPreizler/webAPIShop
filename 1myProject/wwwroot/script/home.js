@@ -108,6 +108,22 @@ async function changeStengthPassword() {
      };
      console.log(userDetails);
 
+     const chekPassword = await fetch('api/Password', {
+         method: 'POST',
+         headers: {
+             //'Accept': 'application/json',
+             'Content-Type': 'application/json'
+             //charset=utf - 8'
+         },
+         body: JSON.stringify(userDetails.password)
+     })
+     /*    .catch (error => console.error('Unable to login.', error));*/
+     if (!chekPassword.ok) {
+         const data = await chekPassword.json();
+         if (data<1)
+         console.log(data);
+         throw new Error("Error 404");
+     }
     
 
      const user = await fetch(uri,{

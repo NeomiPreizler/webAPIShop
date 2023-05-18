@@ -3,6 +3,7 @@ using BL;
 using DL;
 using DTO;
 using Entities;
+using MailKit.Search;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.ConstrainedExecution;
 
@@ -30,6 +31,15 @@ namespace _1myProject.Controllers
             IEnumerable<Product> products = await _productBL.getProductsBySearch(categories, nameProduct, minPrice, maxPrice, orderBy, direction);
             IEnumerable<ProductDTO> productsDTO = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
             return productsDTO.Count() > 0 ? Ok(productsDTO) : NoContent();
+        }
+        // GET: api/<ProductController>??
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDTO>> Get(int id)
+        {
+            Product product = await _productBL.GetProductByIdAsync(id);
+            ProductDTO productDTO = _mapper.Map<Product, ProductDTO>(product);
+            return productDTO != null ? Ok(productDTO) : BadRequest("not found");
+           
         }
 
         // POST api/<ProductController>

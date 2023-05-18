@@ -15,7 +15,7 @@ namespace _1myProject
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<UserLoginDTO, User>();////
+            CreateMap<UserLoginDTO, User>().ReverseMap();
         }
     }
 

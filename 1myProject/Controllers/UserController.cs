@@ -58,8 +58,6 @@ namespace _1myProject.Controllers
 
         }
 
-      
-
         //POST api/<LoginController>
         [HttpPost]
         public async Task<ActionResult<UserDTO>> Post([FromBody] UserDTO newUser)

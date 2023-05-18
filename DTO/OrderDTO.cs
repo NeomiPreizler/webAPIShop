@@ -14,9 +14,8 @@ public partial class OrderDTO
     public int OrderSum { get; set; }
 
     public int UserId { get; set; }
-    [JsonIgnore]
-    public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
 
-    public virtual User User { get; set; } = null!;
+    public ICollection<OrderItemDTO> OrderItems { get; set; } = new List<OrderItemDTO>();
+
 }
 

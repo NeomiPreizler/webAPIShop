@@ -47,7 +47,7 @@ async function createCard(product) {
     const card = temp.content.cloneNode(true);
     card.querySelector('img').src = `/img/${product.img}`;
     card.querySelector('h1').innerText = product.productName;
-    card.querySelector('.price').innerText = `${product.price}$`;
+    card.querySelector('.price').innerText = `${product.price} ₪`;
     card.querySelector('.description').innerText = product.description;
     //card.querySelector('button').value = product.productId;
     card.querySelector('button').addEventListener("click", () =>  addToCart(product) );

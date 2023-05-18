@@ -19,7 +19,6 @@ public partial class ProductDTO
 
     public string? Img { get; set; }
 
-    public virtual Category Category { get; set; } = null!;
-    [JsonIgnore]
-    public virtual ICollection<OrderItem> OrderItems { get; } = new List<OrderItem>();
+    public string CategoryName { get; set; } = null!;
+   
 }

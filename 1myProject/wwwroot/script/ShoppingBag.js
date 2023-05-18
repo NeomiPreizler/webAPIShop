@@ -1,18 +1,19 @@
 ﻿
 removeItem = (productId) => {
     console.log("removeItem");
-    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     const deleteProductIndex = cart.findIndex(p => p.productId == productId);
     if (cart[deleteProductIndex].count > 1) {
         cart[deleteProductIndex].count--;
     }
     else {
-        cart = cart.filter(p => productId != p.productId);
+         
+        const newCart = cart.filter(p => productId != p.productId);
+        cart = newCart;
     }
     sessionStorage.setItem('cart', JSON.stringify(cart));
 
     drawOrderProducts();
-
 
 }
 
@@ -48,6 +49,7 @@ drawOrderProducts = () => {
 
 
 placeOrder = async () => {
+    
     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     if (cart.length == 0) return;
     const orderDate = (new Date()).toISOString();
@@ -55,7 +57,7 @@ placeOrder = async () => {
         return accumulator + prod.price * prod.count;
     }, 0);
     const user = JSON.parse(sessionStorage.getItem("user"));
-    if (!user) { alert("please sign in!"); return; }
+    if (!user) { alert("for shopping you need to login first!"); window.location.href = "../home.html"; return; }
     const orderItems = cart.map(p => { return { productId: p.productId/*, quantity: p.count*/ } })
     const response = await fetch("https://localhost:7061/api/Order", {
         method: 'POST',
@@ -64,10 +66,21 @@ placeOrder = async () => {
         },
         body: JSON.stringify({ orderDate, orderSum, userId: user.userId, orderItems })
     })
+    const data = await response.json();
     console.log(response.status);
-    if (response.ok) sessionStorage.setItem("cart", null);
+    if (response.ok) {
+        sessionStorage.setItem("cart", null);
+        
+        //let h_3 = document.createElement("h3");
+        //h_3.innerHTML = `Order ${data.orderId} added successfully`;
+        //document.getElementsByTagName("tbody")[0].appendChild(h_3);
+        drawOrderProducts();
+        alert(`Order ${data.orderId} added successfully`);
+    };
+
+
 }
 
 
-/*document.addEventListener("load", atLoad());*/
+//document.addEventListener("load", drawOrderProducts());
 window.onload = () => { drawOrderProducts() };

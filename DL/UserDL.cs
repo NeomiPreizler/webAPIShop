@@ -28,35 +28,27 @@ namespace DL
 
        
         public async Task<User> LogIn(User clientUser)
-        {  
-            List<User> user = await _myShopDbContext.Users.Where(user => user.Email == clientUser.Email && user.Password == clientUser.Password).ToListAsync();
-           return user.Count() > 0 ? user[0] : null;
+        {
 
+            List<User> user = await _myShopDbContext.Users.Where(user => user.Email == clientUser.Email && user.Password == clientUser.Password).ToListAsync();
+            return user.Count() > 0 ? user[0] : null;
 
         }
      
         public async Task<User> Post(User user)
-        {   await _myShopDbContext.Users.AddAsync(user);
+        {   
+          
+            await _myShopDbContext.Users.AddAsync(user);
             await _myShopDbContext.SaveChangesAsync();
             return user;
         }
         public async Task<bool> isUserExist(User user)
         {
-            //using (StreamReader reader = System.IO.File.OpenText(_filePath))
-            //{
-            //    string? currentUserInFile;
-            //    while ((currentUserInFile = await reader.ReadLineAsync()) != null)
-            //    {
-            //        User user1 = JsonSerializer.Deserialize<User>(currentUserInFile);
-            //        if (user1.Email == user.Email)
-            //            return true;
-            //    }
-            //}
-            return false;
+
+            List<User> currentUserIn = await  _myShopDbContext.Users.Where( u => user.Email == u.Email).ToListAsync();
+            return (currentUserIn[0] != null);
+ 
         }
-
-
-
 
 
         public async Task Put(int id,User userToUpdate)
