@@ -1,4 +1,4 @@
-# Chocolate & flowers shop
+# Chocolate & Flowers Shop
 ## Description and Architecture
 
 This is a shop site for choclate and flower gifts for special events.
