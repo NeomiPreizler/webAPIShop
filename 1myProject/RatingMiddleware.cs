@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using DL;
+using Entities;
+
 namespace _1myProject
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
@@ -13,10 +15,19 @@ namespace _1myProject
         {
             _next = next;
         }
-        public async Task Invoke(HttpContext httpContext, IRatingDL ratingDL) { 
-  
+        public async Task Invoke(HttpContext httpContext, IRatingDL ratingDL) {
 
-            return _next(httpContext);
+            Rating rate = new();
+            rate.Host = httpContext.Request.Host.Host;
+            rate.Method = httpContext.Request.Method;
+            rate.Path = httpContext.Request.Path;
+            rate.Referer = httpContext.Request.Headers.Referer;
+            rate.UserAgent = httpContext.Request.Headers.UserAgent;
+            rate.RecordDate = DateTime.Now;
+
+            await ratingDL.AddRating(rate);
+
+            await _next(httpContext);
         }
     }
 

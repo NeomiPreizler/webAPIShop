@@ -24,7 +24,7 @@ drawOrderProducts = () => {
     document.getElementsByTagName("tbody")[0].innerHTML = ''
     var countProducts = 0;
     var sumPrice = 0;
-    //console.log(cart);
+
     cart.map((p, i) => {
         console.log(p,i);
         const temp = document.getElementById("temp-row");
@@ -34,7 +34,6 @@ drawOrderProducts = () => {
         clone.querySelector(".descriptionColumn").innerText = p.productName;
         clone.querySelector(".descriptionColumn").innerText = p.count;
         clone.querySelector(".price").innerText = p.price;
-        //clone.querySelector(".expandoHeight").onclick = () => { removeItem(p.productId) }
         clone.querySelector(".expandoHeight").addEventListener('click', () => {
             removeItem(p.productId);
         });

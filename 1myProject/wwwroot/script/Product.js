@@ -1,6 +1,7 @@
 ﻿
 /*const uri = 'api/Product';*/
-addToCart = (product) => {
+addToCart = (product, b) => {
+    b.target.style.backgroundColor ='#737373';
     var cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingProd = cart.find(p => p.productId == product.productId);
     if (existingProd) existingProd.count += 1;
@@ -50,7 +51,7 @@ async function createCard(product) {
     card.querySelector('.price').innerText = `${product.price} ₪`;
     card.querySelector('.description').innerText = product.description;
     //card.querySelector('button').value = product.productId;
-    card.querySelector('button').addEventListener("click", () =>  addToCart(product) );
+    card.querySelector('button').addEventListener("click", (b) =>  addToCart(product,b) );
     document.getElementById('PoductList').appendChild(card);
     //return card;
 }

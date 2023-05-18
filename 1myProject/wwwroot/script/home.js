@@ -151,4 +151,3 @@ logout = () => {
     localStorage.clear();
     document.location.href = '../home.html';
 }
-   
